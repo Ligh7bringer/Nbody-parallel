@@ -1,0 +1,138 @@
+% #######################################
+% ########### FILL THESE IN #############
+% #######################################
+\def\mytitle{An analysis and comparison of techniques of parallelisation of an n-body simulation}
+\def\mykeywords{concurrent, parallel, blockchain}
+\def\myauthor{}
+\def\contact{40203970}
+\def\mymodule{Concurrent and Parallel Systems (SET10108)}
+% #######################################
+% #### YOU DON'T NEED TO TOUCH BELOW ####
+% #######################################
+\documentclass[12pt, a4paper]{article}
+\renewcommand{\baselinestretch}{1.5} 
+\usepackage[a4paper,outer=1in,inner=1in,top=1in,bottom=1in]{geometry}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\usepackage[hyphens]{url}
+%colour our links, remove weird boxes
+\usepackage[breaklinks,colorlinks,linkcolor={black},citecolor={blue!80!black},urlcolor={blue!80!black}]{hyperref}
+%Stop indentation on new paragraphs
+\usepackage[parfill]{parskip}
+%% Arial-like font
+\IfFileExists{uarial.sty}
+{
+    \usepackage[english]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{uarial}
+    \renewcommand{\familydefault}{\sfdefault}
+}{
+    \GenericError{}{Couldn't find Arial font}{ you may need to install 'nonfree' fonts on your system}{}
+    \usepackage{lmodern}
+    \renewcommand*\familydefault{\sfdefault}
+}
+%Napier logo top right
+\usepackage{watermark}
+%Lorem Ipusm dolor please don't leave any in you final report ;)
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+%give us the Capital H that we all know and love
+\usepackage{float}
+%tone down the line spacing after section titles
+\usepackage{titlesec}
+%Cool maths printing
+\usepackage{amsmath}
+%PseudoCode
+\usepackage{algorithm2e}
+%lists
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{colortbl}
+\usepackage{dblfloatfix}
+\def\nespace{\hskip\fontdimen2\font\relax}
+\usepackage{appendix}
+
+\hyphenation{multi-processing}
+
+\titleformat{\section}
+  {\normalfont\fontsize{13}{15}\bfseries}{\thesection}{1em}{} % make section title font size smaller
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesubsection}{1em}{} % make subsection title font size smaller
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{11}{15}\bfseries}{\thesubsubsection}{1em}{} % make subsubsection title font size smaller
+
+\titlespacing{\subsection}{0pt}{\parskip}{-3pt}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\paragraph}{0pt}{\parskip}{\parskip}
+
+\newcommand{\figuremacro}[5]{
+    \begin{figure}[#1]
+        \centering
+        \caption[#3]{\textbf{#3}#4}
+        \includegraphics[width=#5\columnwidth]{#2}
+        \label{fig:#2}
+    \end{figure}
+}
+
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\} % put paragraph headings on their own line!
+
+\lstset{
+	escapeinside={/*@}{@*/}, language=C++,
+	basicstyle=\fontsize{8.5}{12}\selectfont,
+	numbers=left,numbersep=2pt,xleftmargin=2pt,frame=tb,
+    columns=fullflexible,showstringspaces=false,tabsize=4,
+    keepspaces=true,showtabs=false,showspaces=false,
+    backgroundcolor=\color{white}, morekeywords={inline,public,
+    class,private,protected,struct},captionpos=t,lineskip=-0.4em,
+	aboveskip=10pt, extendedchars=true, breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941}
+}
+
+\thiswatermark{\centering \put(320,-38.0){\includegraphics[scale=0.7]{napier}} }
+\title{\mytitle}
+\author{\myauthor\hspace{1em}\\\contact\\\hspace{0.5em}\hspace{0.5em}\mymodule}
+\date{}
+\hypersetup{pdfauthor=\myauthor,pdftitle=\mytitle,pdfkeywords=\mykeywords}
+\sloppy
+% #######################################
+% ########### START FROM HERE ###########
+% #######################################
+\begin{document}
+    \maketitle   
+    \newpage
+
+    \begin{abstract}    
+        The aim of this report is to...
+    \end{abstract}
+
+    \section{Introduction and Background}   
+
+    \section{Initial Analysis}        
+    \subsection{Subsection}
+    This subsection is about.... \cite{williams2012c++}
+    \subsubsection{Subsubsection}
+    This subsubsection is about....
+    
+    \section{Methodology}       
+
+    \section{Results and Discussions}    
+
+    \section{Conclusion}
+
+    \bibliographystyle{ieeetr}
+    \bibliography{references}		
+    
+    % \section*{Appendices}
+    % \begin{appendices}
+    %     \section{First appendix}
+    %     This is an appendix
+
+    %     \section{Second appendix}
+    %     This is an appendix      
+    % \end{appendices}
+
+\end{document}
