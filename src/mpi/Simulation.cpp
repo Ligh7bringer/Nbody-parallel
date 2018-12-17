@@ -89,9 +89,9 @@ void Simulation::start() {
     Timer t("update");
     calculate_forces(masses, tmp_data, loc_forces, loc_pos, NUM_BODIES, loc_n);
 
-    for (int loc_part = 0; loc_part < loc_n; loc_part++)
-      update_bodies(loc_part, masses, loc_forces, loc_pos, loc_vel, NUM_BODIES,
-                    loc_n, TIME_STEP);
+    for (int loc_bodies = 0; loc_bodies < loc_n; loc_bodies++)
+      update_bodies(loc_bodies, masses, loc_forces, loc_pos, loc_vel,
+                    NUM_BODIES, loc_n, TIME_STEP);
 
     t.stop();
 
@@ -260,6 +260,7 @@ void Simulation::calculate_forces(double masses[], vec2 tmp_data[],
                                   int loc_n) {
   MPI_Status status;
 
+  // source and destination processes
   auto src = (my_rank + 1) % comm_sz;
   auto dest = (my_rank - 1 + comm_sz) % comm_sz;
 
@@ -331,8 +332,8 @@ void Simulation::calculate_forces_pair(double m1, double m2, vec2 pos1,
 void Simulation::update_bodies(int loc_body, double masses[], vec2 loc_forces[],
                                vec2 loc_pos[], vec2 loc_vel[], int n, int loc_n,
                                double delta_t) {
-  int part = my_rank * loc_n + loc_body;
-  double fact = delta_t / masses[part];
+  int body = my_rank * loc_n + loc_body;
+  double fact = delta_t / masses[body];
   loc_vel[loc_body][X] += loc_forces[loc_body][X];
   loc_vel[loc_body][Y] += loc_forces[loc_body][Y];
   loc_pos[loc_body][X] += TIME_STEP * loc_vel[loc_body][X] / TO_METERS;

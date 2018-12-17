@@ -39,11 +39,11 @@ std::vector<Body> Body::generate(unsigned int n) {
     radius =
         sqrt(SYSTEM_SIZE) *
         sqrt(randRadius(gen));  // get a random radius within the system bounds
-    velocity = pow(
-        ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
-                                EXTRA_MASS * SOLAR_MASS))  // calculate velocity
-         / (radius * TO_METERS)),
-        0.5);
+    auto t = ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
+                                     EXTRA_MASS * SOLAR_MASS)));
+    velocity = t / (radius * TO_METERS);
+    // calculate velocity
+    velocity = pow(velocity, 0.5);
     auto mass =
         (EXTRA_MASS * SOLAR_MASS) / NUM_BODIES;  // evenly distributed mass
     totalExtraMass += mass;                      // keep track of mass

@@ -24,7 +24,7 @@ class Timer {
   // constructor
   Timer(std::string title)
       : _title(std::move(title)),  // the title will be temporary string anyway,
-                                   // so no need to pass them by reference
+                                   // so no need to pass it by reference
         _stopped(false),
         _duration(0) {
     // might as well start the timer when the object is constructed
@@ -47,7 +47,7 @@ class Timer {
         std::chrono::duration_cast<std::chrono::milliseconds>(_end - _start)
             .count();
     // display it
-    std::cout << _title << ": " << _duration << "ms.\n" << std::flush;
+    std::cout << _duration << "\n" << std::flush;
     // remember that the timer has been stop explicitly
     _stopped = true;
   }

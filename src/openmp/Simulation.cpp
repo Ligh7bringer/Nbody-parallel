@@ -70,19 +70,15 @@ void Simulation::update() {
 
 // every body interacts with all other body
 // which is why the nested loops are needed
-#pragma omp parallel for  // schedule(static, NUM_BODIES / num_threads)
+#pragma omp parallel for schedule(static, 1)
   for (int i = 0; i < NUM_BODIES; ++i) {
 #pragma omp parallel for
-    for (int j = 1; j < NUM_BODIES; ++j) {
-      if (i != j) {  // bodies shouldn't interact with themselves though
-        _bodies[i].interact(_bodies[j]);
-      }
+    for (int j = i + 1; j < NUM_BODIES; ++j) {
+      _bodies[i].interact(_bodies[j]);
     }
   }
 
-  // update bodies' positions
-  // TODO: would it work if this happens in the interact method
-  // so that this extra loop is not needed
+// update bodies' positions
 #pragma omp parallel for
   for (int i = 0; i < NUM_BODIES; ++i) {
     _bodies[i].update(dt);  // update the body

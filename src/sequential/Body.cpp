@@ -77,18 +77,19 @@ std::vector<Body> Body::generate(unsigned int n) {
   // start at 1 because the sun is at index 0
   for (int index = 1; index < NUM_BODIES; ++index) {
     // generate a random body:
-    angle = randAngle(gen);  // get a random angle
-    radius =
-        sqrt(SYSTEM_SIZE) *
-        sqrt(randRadius(gen));  // get a random radius within the system bounds
-    velocity = pow(
-        ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
-                                EXTRA_MASS * SOLAR_MASS))  // calculate velocity
-         / (radius * TO_METERS)),
-        0.5);
-    auto mass =
-        (EXTRA_MASS * SOLAR_MASS) / NUM_BODIES;  // evenly distributed mass
-    totalExtraMass += mass;                      // keep track of mass
+    // get a random angle
+    angle = randAngle(gen);
+    // get a random radius within the system bounds
+    radius = sqrt(SYSTEM_SIZE) * sqrt(randRadius(gen));
+    auto t = ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
+                                     EXTRA_MASS * SOLAR_MASS)));
+    velocity = t / (radius * TO_METERS);
+    // calculate velocity
+    velocity = pow(velocity, 0.5);
+    // evenly distributed mass
+    auto mass = (EXTRA_MASS * SOLAR_MASS) / NUM_BODIES;
+    // keep track of mass
+    totalExtraMass += mass;
     // add the body to the vector
     bodies.emplace_back(
         vec3{radius * cos(angle), radius * sin(angle),
@@ -98,7 +99,7 @@ std::vector<Body> Body::generate(unsigned int n) {
         mass);                // mass
   }
 
-  // return resutl
+  // return result
   return bodies;
 }
 

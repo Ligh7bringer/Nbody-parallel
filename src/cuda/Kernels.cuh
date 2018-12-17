@@ -6,7 +6,7 @@
 #include "Body.h"
 #include "Constants.h"
 
-const unsigned int THREAD_NUM = 1024;
+const unsigned int THREAD_NUM = 1024 / 4;
 
 // error checking function
 inline void gpuAssert(cudaError_t code, const char* file, int line, bool abort);
@@ -15,8 +15,9 @@ inline void gpuAssert(cudaError_t code, const char* file, int line, bool abort);
 void interact_bodies_cuda(std::vector<Body>& bodies, unsigned int num_bodies);
 
 // actual kernels
-__global__ void interact_kernel(Body* bodies, unsigned int num_bodies);
+__global__ void calc_forces_and_update(Body* bodies, unsigned int num_bodies);
+__device__ void calculate_forces(Body* bodies, unsigned int num_bodies);
+__device__ void update_bodies(Body* bodies, unsigned int num_bodies);
 
-__global__ void orig(Body* bodies, unsigned int num_bodies);
-
+__device__ void test(Body* bodies, unsigned int num_bodies);
 #endif  // KERNELS_H

@@ -47,7 +47,7 @@ void Body::interact(Body &other) {
 
 // generates n random bodies, stores them in a vector and returns it
 std::vector<Body> Body::generate(unsigned int n) {
-  Timer t("generate bodies");
+  // Timer t("generate bodies");
   // vector to store the results
   std::vector<Body> bodies;
   // make sure there is enough space in it
@@ -82,11 +82,11 @@ std::vector<Body> Body::generate(unsigned int n) {
     radius =
         sqrt(SYSTEM_SIZE) *
         sqrt(randRadius(gen));  // get a random radius within the system bounds
-    velocity = pow(
-        ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
-                                EXTRA_MASS * SOLAR_MASS))  // calculate velocity
-         / (radius * TO_METERS)),
-        0.5);
+    auto t = ((G * (SOLAR_MASS + ((radius - INNER_BOUND) / SYSTEM_SIZE) *
+                                     EXTRA_MASS * SOLAR_MASS)));
+    velocity = t / (radius * TO_METERS);
+    // calculate velocity
+    velocity = pow(velocity, 0.5);
     auto mass =
         (EXTRA_MASS * SOLAR_MASS) / NUM_BODIES;  // evenly distributed mass
     totalExtraMass += mass;                      // keep track of mass

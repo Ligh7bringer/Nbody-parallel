@@ -20,6 +20,7 @@ class Body {
   vec3 _accel;     // acceleration
 
  public:
+  Body() = default;
   Body(vec3 pos, vec3 vel, vec3 accel, double mass)
       : _position(pos), _velocity(vel), _accel(accel), _mass(mass) {}
 
