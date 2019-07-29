@@ -70,33 +70,27 @@ __device__ void calculate_forces(Body* bodies, unsigned int num_bodies) {
   // get global position
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
-  for (int j = i + 1; j < num_bodies; ++j) {
-    // I am not sure why this if statement is needed
-    // i and j should never be equal?
-    if (i != j) {
-      // vector to store the position difference between the 2 // bodies
-      vec3 posDiff{};
-      posDiff.x = (bodies[j].position().x - bodies[i].position().x) *
-                  TO_METERS;  // calculate it
-      posDiff.y = (bodies[j].position().y - bodies[i].position().y) * TO_METERS;
-      posDiff.z = (bodies[j].position().z - bodies[i].position().z) * TO_METERS;
-      // the actual distance is the length of the vector
-      auto dist = sqrt(posDiff.x * posDiff.x + posDiff.y * posDiff.y +
-                       posDiff.z * posDiff.z);
-      double F =
-          TIME_STEP * (G * bodies[i].mass() * bodies[j].mass()) /
-          ((dist * dist + SOFTENING * SOFTENING) * dist);  // calculate force
+  for (int j = 0; j < num_bodies; ++j) {
+	if(i != j) {
+		// vector to store the position difference between the 2 bodies
+		vec3 posDiff{};
+		// calculate it
+		posDiff.x = (bodies[j].position().x - bodies[i].position().x) * TO_METERS;  
+		posDiff.y = (bodies[j].position().y - bodies[i].position().y) * TO_METERS;
+		posDiff.z = (bodies[j].position().z - bodies[i].position().z) * TO_METERS;
+		// the actual distance is the length of the vector
+		auto dist = sqrtf(posDiff.x * posDiff.x + posDiff.y * posDiff.y +
+						posDiff.z * posDiff.z);
 
-      // set this body's acceleration
-      bodies[j].acceleration().x -= F * posDiff.x / bodies[j].mass();
-      bodies[j].acceleration().y -= F * posDiff.y / bodies[j].mass();
-      bodies[j].acceleration().z -= F * posDiff.z / bodies[j].mass();
+		// calculate force
+		double F = TIME_STEP * (G * bodies[i].mass() * bodies[j].mass()) /
+			((dist * dist + SOFTENING * SOFTENING) * dist);  
 
-      // set the other body's acceleration
-      bodies[i].acceleration().x += F * posDiff.x / bodies[i].mass();
-      bodies[i].acceleration().y += F * posDiff.y / bodies[i].mass();
-      bodies[i].acceleration().z += F * posDiff.z / bodies[i].mass();
-    }
+		// set this body's acceleration
+		bodies[i].acceleration().x += F * posDiff.x / bodies[i].mass();
+		bodies[i].acceleration().y += F * posDiff.y / bodies[i].mass();
+		bodies[i].acceleration().z += F * posDiff.z / bodies[i].mass();
+	}
   }
 }
 
